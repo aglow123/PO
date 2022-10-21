@@ -4,10 +4,27 @@ import static java.lang.System.out;
 public class World {
 
     public static void main(String[] args) {
-        out.println("system wystartował");
-        Direction[] dir = convert(args);
-        run(dir);
-        out.println("system zakończył działanie");
+
+//        out.println("system wystartował");
+//        Direction[] dir = convert(args);
+//        run(dir);
+//        out.println("system zakończył działanie");
+
+//        Vector2d position1 = new Vector2d(1,2);
+//        System.out.println(position1);
+//        Vector2d position2 = new Vector2d(-2,1);
+//        System.out.println(position2);
+//        System.out.println(position1.add(position2));
+
+//        MapDirection pos1 = MapDirection.NORTH;
+//        MapDirection pos2 = MapDirection.EAST;
+//        MapDirection pos3 = MapDirection.SOUTH;
+//        MapDirection pos4 = MapDirection.WEST;
+//        out.println(pos1);
+//        out.println(pos1.next());
+//        out.println(pos3.previous());
+//        out.println(pos2.toUnitVector());
+
     }
     public static void run(Direction[] dir){
         for (Direction direction : dir) {
