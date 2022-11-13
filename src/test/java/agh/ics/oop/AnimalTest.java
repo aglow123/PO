@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 public class AnimalTest {
     @Test
     void testOrientation(){
-        Animal turtle = new Animal();
+        var map = new RectangularMap(5, 5);
+        Animal turtle = new Animal(map);
         Assertions.assertEquals(MapDirection.NORTH, turtle.getOrientation());
         turtle.move(MoveDirection.RIGHT);
         Assertions.assertEquals(MapDirection.EAST, turtle.getOrientation());
@@ -20,7 +21,8 @@ public class AnimalTest {
 
     @Test
     void testPosition(){
-        Animal turtle = new Animal();
+        var map = new RectangularMap(5, 5);
+        Animal turtle = new Animal(map);
         Assertions.assertEquals(new Vector2d(2,2), turtle.getPosition());
         turtle.move(MoveDirection.FORWARD);
         Assertions.assertEquals(new Vector2d(2,3), turtle.getPosition());
@@ -37,7 +39,8 @@ public class AnimalTest {
 
     @Test
     void testBorders(){
-        Animal turtle = new Animal();
+        var map = new RectangularMap(5, 5);
+        Animal turtle = new Animal(map);
         turtle.move(MoveDirection.FORWARD);
         turtle.move(MoveDirection.FORWARD);
         Assertions.assertEquals(new Vector2d(2,4), turtle.getPosition());
@@ -69,7 +72,8 @@ public class AnimalTest {
 
     @Test
     void testIsAt(){
-        Animal turtle = new Animal();
+        var map = new RectangularMap(5, 5);
+        Animal turtle = new Animal(map);
         Assertions.assertTrue(turtle.isAt(new Vector2d(2,2)));
     }
 }

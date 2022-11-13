@@ -1,23 +1,21 @@
 package agh.ics.oop;
 import java.util.Arrays;
+import java.util.LinkedList;
+
 import static java.lang.System.out;
 
 public class World {
 
     public static void main(String[] args) {
 
-        Animal unicorn = new Animal();
-        out.println(unicorn);
-//        unicorn.move(MoveDirection.RIGHT);
-//        unicorn.move(MoveDirection.FORWARD);
-//        unicorn.move(MoveDirection.FORWARD);
-//        unicorn.move(MoveDirection.FORWARD);
-//        out.println(unicorn.toString());
-        String[] table = new String[]{"r", "f", "forward", "l", "f"};
-        for(MoveDirection move:OptionParser.parse(table)){
-            unicorn.move(move);
-        }
-        out.println(unicorn);
+        MoveDirection[] directions = new OptionParser().parse(args);
+        IWorldMap map = new RectangularMap(10, 5);
+        Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
+        IEngine engine = new SimulationEngine(directions, map, positions);
+        out.println(map);
+        out.println("");
+        engine.run();
+        out.println(map);
 
     }
     public static void run(Direction[] dir){
