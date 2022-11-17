@@ -1,6 +1,6 @@
 package agh.ics.oop;
 
-public class Animal{
+public class Animal implements IMapElement{
     private static final Vector2d DEF_POSITION = new Vector2d(2,2);
     private MapDirection orientation;
     private Vector2d position;
@@ -15,7 +15,7 @@ public class Animal{
         this.position = initialPosition;
         this.map = map;
         if(!map.place(this)){
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("You cannot place two animals at the same position");
         }
     }
 
@@ -88,8 +88,16 @@ public class Animal{
                 newPosition = this.position;
                 break;
         }
-        if (this.map.canMoveTo(newPosition)) {
-            this.position = newPosition;
+        if (this.map.canMoveTo(newPosition)){
+            if(!this.map.isOccupied(newPosition)) {
+                this.position = newPosition;
+            }
+            else if(this.map.objectAt(newPosition) instanceof Grass){
+                if (map instanceof GrassField && ((GrassField) map).isPlanted(newPosition)) {
+                    ((GrassField) map).EatAndPlantNewGrass(newPosition);
+                    this.position = newPosition;
+                }
+            }
         }
         return this;
     }

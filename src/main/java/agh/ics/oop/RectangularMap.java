@@ -1,41 +1,12 @@
 package agh.ics.oop;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class RectangularMap implements IWorldMap{
-    private final Vector2d lowerLeft;
-    private final Vector2d upperRight;
-    List<Animal> animals = new ArrayList<>();
+public class RectangularMap extends AbstractWorldMap{
 
     public RectangularMap(int width, int height){
         this.lowerLeft = new Vector2d(0,0);
         this.upperRight = new Vector2d(width-1, height-1);
-    }
-
-    public String toString(){
-        return new MapVisualizer(this).draw(this.lowerLeft, this.upperRight);
-    }
-    @Override
-    public boolean canMoveTo(Vector2d position) {
-        return position.follows(this.lowerLeft) && position.precedes(this.upperRight) && !this.isOccupied(position);
-    }
-
-    @Override
-    public boolean place(Animal animal) {
-        if (!canMoveTo(animal.getPosition())){
-            return false;
-        }
-        animals.add(animal);
-        return true;
-    }
-    @Override
-    public boolean isOccupied(Vector2d position) {
-        for (Animal animal: animals) {
-            if (animal.getPosition().equals(position))
-                return true;
-        }
-        return false;
     }
 
     @Override
@@ -46,6 +17,19 @@ public class RectangularMap implements IWorldMap{
         }
         return null;
     }
+
+    public Vector2d[] setBorders(){
+        Vector2d[] borders = {this.lowerLeft, this.upperRight};
+//        //dla dynamicznego liczenia granic
+//        if(!animals.isEmpty()){
+//            for(Animal animal: animals){
+//                borders[0] = borders[0].lowerLeft(animal.getPosition());
+//                borders[1] = borders[1].upperRight(animal.getPosition());
+//            }
+//        }
+        return borders;
+    }
+
     public List<Animal> getAnimals(){
         return animals;
     }

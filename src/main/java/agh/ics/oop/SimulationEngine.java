@@ -1,7 +1,5 @@
 package agh.ics.oop;
 
-import java.util.LinkedList;
-
 public class SimulationEngine implements IEngine{
     private MoveDirection[] moves;
     private IWorldMap map;
@@ -11,9 +9,9 @@ public class SimulationEngine implements IEngine{
        this.moves = moves;
        this.map = map;
        this.positions = positions;
-        for (Vector2d position: positions) {
-            Animal animal = new Animal(this.map, position);
-        }
+       for (Vector2d position: positions) {
+           Animal animal = new Animal(this.map, position);
+       }
     }
     @Override
     public void run() {
@@ -21,9 +19,12 @@ public class SimulationEngine implements IEngine{
         for (MoveDirection move : moves) {
             Animal animal = (Animal) this.map.objectAt(this.positions[i%positions.length]);
             animal.move(move);
-//            System.out.println("round " + i);
-//            System.out.println(this.map);
             this.positions[i% positions.length] = animal.getPosition();
+//            if (map instanceof GrassField && ((GrassField) map).isPlanted(animal.getPosition())) {
+//                ((GrassField) map).EatAndPlantNewGrass(animal.getPosition());
+//            }
+            System.out.println("round " + i + "\n move " + move);
+            System.out.println(this.map);
             i++;
         }
     }
