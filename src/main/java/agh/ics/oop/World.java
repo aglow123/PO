@@ -1,6 +1,5 @@
 package agh.ics.oop;
 import java.util.Arrays;
-import java.util.LinkedList;
 
 import static java.lang.System.out;
 
@@ -8,7 +7,7 @@ public class World {
 
     public static void main(String[] args) {
 
-        MoveDirection[] directions = new OptionParser().parse(args);
+        MoveDirection[] directions = OptionParser.parse(args);
         IWorldMap map = new GrassField(10);
         Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,3) };
         IEngine engine = new SimulationEngine(directions, map, positions);
@@ -20,7 +19,7 @@ public class World {
 
 //        MoveDirection[] directions = new OptionParser().parse(args);
 //        IWorldMap map = new RectangularMap(10, 5);
-//        Vector2d[] positions = { new Vector2d(3,4), new Vector2d(3,4) };
+//        Vector2d[] positions = { new Vector2d(3,4), new Vector2d(3,3) };
 //        IEngine engine = new SimulationEngine(directions, map, positions);
 //        out.println(map);
 //        out.println("");

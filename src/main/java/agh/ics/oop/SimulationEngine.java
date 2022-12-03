@@ -10,7 +10,7 @@ public class SimulationEngine implements IEngine{
        this.map = map;
        this.positions = positions;
        for (Vector2d position: positions) {
-           Animal animal = new Animal(this.map, position);
+           new Animal(map, position);
        }
     }
     @Override
@@ -20,9 +20,7 @@ public class SimulationEngine implements IEngine{
             Animal animal = (Animal) this.map.objectAt(this.positions[i%positions.length]);
             animal.move(move);
             this.positions[i% positions.length] = animal.getPosition();
-//            if (map instanceof GrassField && ((GrassField) map).isPlanted(animal.getPosition())) {
-//                ((GrassField) map).EatAndPlantNewGrass(animal.getPosition());
-//            }
+
             System.out.println("round " + i + "\n move " + move);
             System.out.println(this.map);
             i++;

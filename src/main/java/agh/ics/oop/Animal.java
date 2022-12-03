@@ -1,10 +1,13 @@
 package agh.ics.oop;
 
+import java.util.ArrayList;
+
 public class Animal implements IMapElement{
     private static final Vector2d DEF_POSITION = new Vector2d(2,2);
     private MapDirection orientation;
     private Vector2d position;
     private IWorldMap map;
+    private final ArrayList<IPositionChangeObserver> observers = new ArrayList<>();
 
     public Animal(IWorldMap map){
         this(map, DEF_POSITION);
@@ -90,17 +93,34 @@ public class Animal implements IMapElement{
         }
         if (this.map.canMoveTo(newPosition)){
             if(!this.map.isOccupied(newPosition)) {
+                Vector2d oldPosition = this.position;
                 this.position = newPosition;
+                positionChanged(oldPosition, newPosition);
             }
             else if(this.map.objectAt(newPosition) instanceof Grass){
                 if (map instanceof GrassField && ((GrassField) map).isPlanted(newPosition)) {
                     ((GrassField) map).EatAndPlantNewGrass(newPosition);
+                    Vector2d oldPosition = this.position;
                     this.position = newPosition;
+                    positionChanged(oldPosition, newPosition);
                 }
             }
         }
         return this;
     }
 
+    void addObserver(IPositionChangeObserver observer) {
+        observers.add(observer);
+    }
+
+    void removeObserver(IPositionChangeObserver observer) {
+        observers.remove(observer);
+    }
+
+    void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
+        for (IPositionChangeObserver observer: observers) {
+            observer.positionChanged(oldPosition, newPosition);
+        }
+    }
 
 }
