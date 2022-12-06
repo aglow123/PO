@@ -7,8 +7,14 @@ public class GrassField extends AbstractWorldMap{
     int numberOfGrass;
     Vector2d lowerLeftGrass, upperRightGrass;
     Map<Vector2d, Grass> grasses = new HashMap<>();
+    private final MapBoundary mapBoundary;
 
     public GrassField(int n){
+        this(new MapBoundary(), n);
+    }
+
+    public GrassField(MapBoundary mapBoundary, int n){
+        this.mapBoundary = mapBoundary;
         this.numberOfGrass = n;
         this.lowerLeftGrass = new Vector2d(0,0);
         this.upperRightGrass = new Vector2d((int)Math.sqrt(n*10), (int)Math.sqrt(n*10));
@@ -33,12 +39,15 @@ public class GrassField extends AbstractWorldMap{
                 break;
             }
         }
-        grasses.put(newPosition, new Grass(newPosition));
+        Grass grass = new Grass(newPosition);
+        grasses.put(newPosition, grass);
+        mapBoundary.add(grass);
     }
 
     public void EatAndPlantNewGrass(Vector2d position){
         PlantGrass();
         this.grasses.remove(position);
+        mapBoundary.remove(position);
     }
 
     public boolean isPlanted(Vector2d position){
@@ -50,37 +59,24 @@ public class GrassField extends AbstractWorldMap{
     }
 
     public Vector2d[] setBorders(){
-        Vector2d[] borders = {new Vector2d(0, 0), new Vector2d(0, 0)};
-        if (!grasses.isEmpty()) {
-            for(Map.Entry<Vector2d, Grass> entry: grasses.entrySet()){
-                borders[0] = borders[0].lowerLeft(entry.getValue().getPosition());
-                borders[1] = borders[1].upperRight(entry.getValue().getPosition());
-            }
-        }
-        if(!animals.isEmpty()){
-            for(Map.Entry<Vector2d, Animal> entry: animals.entrySet()){
-                borders[0] = borders[0].lowerLeft(entry.getValue().getPosition());
-                borders[1] = borders[1].upperRight(entry.getValue().getPosition());
-            }
-        }
-        return borders;
+        return new Vector2d[]{mapBoundary.lowerLeft(), mapBoundary.upperRight()};
     }
 
     @Override
-    public boolean place(Animal animal) {
+    public boolean place(Animal animal) throws IllegalArgumentException{
         if (!canMoveTo(animal.getPosition())){
-            return false;
+            throw new IllegalArgumentException("You cannot place an animal in the position outside the map");
         }
         if (this.isOccupied(animal.getPosition())){
             if (this.objectAt(animal.getPosition()) instanceof Animal)
-                return false;
+                throw new IllegalArgumentException("You cannot place an animal in the position of another animal");
             else if (this.objectAt(animal.getPosition()) instanceof Grass){
                 EatAndPlantNewGrass(animal.getPosition());
             }
         }
         animals.put(animal.getPosition(), animal);
         animal.addObserver(this);
-
+        mapBoundary.add(animal);
         return true;
     }
 
@@ -94,4 +90,10 @@ public class GrassField extends AbstractWorldMap{
         }
         return null;
     }
+
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition){
+        super.positionChanged(oldPosition, newPosition);
+        mapBoundary.positionChanged(oldPosition, newPosition);
+    }
+
 }

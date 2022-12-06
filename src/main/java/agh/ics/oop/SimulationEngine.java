@@ -20,9 +20,8 @@ public class SimulationEngine implements IEngine{
             Animal animal = (Animal) this.map.objectAt(this.positions[i%positions.length]);
             animal.move(move);
             this.positions[i% positions.length] = animal.getPosition();
-
-            System.out.println("round " + i + "\n move " + move);
-            System.out.println(this.map);
+//            System.out.println("round " + i + "\n move " + move);
+//            System.out.println(this.map);
             i++;
         }
     }

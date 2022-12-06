@@ -17,9 +17,7 @@ public class Animal implements IMapElement{
         this.orientation = MapDirection.NORTH;
         this.position = initialPosition;
         this.map = map;
-        if(!map.place(this)){
-            throw new IllegalArgumentException("You cannot place two animals at the same position");
-        }
+        map.place(this);
     }
 
     public String toString(){
@@ -96,6 +94,7 @@ public class Animal implements IMapElement{
                 Vector2d oldPosition = this.position;
                 this.position = newPosition;
                 positionChanged(oldPosition, newPosition);
+
             }
             else if(this.map.objectAt(newPosition) instanceof Grass){
                 if (map instanceof GrassField && ((GrassField) map).isPlanted(newPosition)) {

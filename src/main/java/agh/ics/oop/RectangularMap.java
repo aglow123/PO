@@ -18,15 +18,7 @@ public class RectangularMap extends AbstractWorldMap{
     }
 
     public Vector2d[] setBorders(){
-        Vector2d[] borders = {this.lowerLeft, this.upperRight};
-//        //dla dynamicznego liczenia granic
-//        if(!animals.isEmpty()){
-//            for(Animal animal: animals){
-//                borders[0] = borders[0].lowerLeft(animal.getPosition());
-//                borders[1] = borders[1].upperRight(animal.getPosition());
-//            }
-//        }
-        return borders;
+        return new Vector2d[]{this.lowerLeft, this.upperRight};
     }
 
     public List<Animal> getAnimals(){

@@ -35,6 +35,7 @@ public class RectangularMapTest {
         var map = new RectangularMap(5, 5);
         Assertions.assertThrows(IllegalArgumentException.class, () -> new Animal(map, new Vector2d(5, 5)));
     }
+
     @Test
     void testIsOccupied(){
         var map = new RectangularMap(5, 5);
