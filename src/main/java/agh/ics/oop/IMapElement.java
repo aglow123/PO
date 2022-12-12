@@ -21,4 +21,11 @@ public interface IMapElement {
      * @return String containing representation of the object.
      */
     String toString();
+
+    /**
+     * Return name of element.
+     *
+     * @return String containing name of element.
+     */
+    String getElementName();
 }

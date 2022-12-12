@@ -43,4 +43,7 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
         animals.put(newPosition, animal);
     }
 
+    public String animals(){
+        return animals.toString();
+    }
 }

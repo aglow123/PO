@@ -30,6 +30,17 @@ public class Animal implements IMapElement{
         return this.toString();
     }
 
+    @Override
+    public String getElementName() {
+        switch(this.orientation){
+            case NORTH: { return "up.png";}
+            case WEST: { return "left.png";}
+            case SOUTH: { return "down.png";}
+            case EAST: { return "right.png";}
+            default: { return "candy.png";}
+        }
+    }
+
     public MapDirection getOrientation(){return this.orientation;}
 
     public Vector2d getPosition(){return this.position;}
@@ -40,7 +51,6 @@ public class Animal implements IMapElement{
 
     public Animal move(MoveDirection direction){
         Vector2d newPosition = null;
-
         switch (direction) {
             case FORWARD:
                 switch (this.orientation) {

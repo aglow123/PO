@@ -11,6 +11,7 @@ public class World {
             Application.launch(App.class, args);
         } catch(Exception ex){
             out.println(ex.getMessage());
+            out.println(ex.getClass());
         }
     }
 }

@@ -1,9 +1,13 @@
 package agh.ics.oop;
 
-public class SimulationEngine implements IEngine{
-    private MoveDirection[] moves;
-    private IWorldMap map;
-    private Vector2d[] positions;
+import java.util.ArrayList;
+import java.util.List;
+
+public class SimulationEngine implements IEngine, Runnable{
+    protected MoveDirection[] moves;
+    protected IWorldMap map;
+    protected Vector2d[] positions;
+
 
     public SimulationEngine(MoveDirection[] moves, IWorldMap map, Vector2d[] positions){
        this.moves = moves;
@@ -13,6 +17,16 @@ public class SimulationEngine implements IEngine{
            new Animal(map, position);
        }
     }
+
+    public SimulationEngine(IWorldMap map, Vector2d[] positions){
+        this.moves = new ArrayList<MoveDirection>().toArray(new MoveDirection[0]);
+        this.map = map;
+        this.positions = positions;
+        for (Vector2d position: positions) {
+            new Animal(map, position);
+        }
+    }
+
     @Override
     public void run() {
         int i = 0;
@@ -20,8 +34,6 @@ public class SimulationEngine implements IEngine{
             Animal animal = (Animal) this.map.objectAt(this.positions[i%positions.length]);
             animal.move(move);
             this.positions[i% positions.length] = animal.getPosition();
-//            System.out.println("round " + i + "\n move " + move);
-//            System.out.println(this.map);
             i++;
         }
     }
